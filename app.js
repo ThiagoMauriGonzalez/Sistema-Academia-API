@@ -75,6 +75,10 @@ app.post('/cadastrar', function (req, res) {
     res.redirect('/');
 });
 
+app.get('/catraca', function (req, res) {
+    res.render('catraca');
+});
+
 app.get('/gerenciamento', function (req, res) {
     //SQL 
     let sql = 'SELECT * FROM ALUNOS';
