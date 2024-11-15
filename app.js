@@ -139,7 +139,6 @@ app.get('/users', function (req, res) {
 
 app.get('/loginRelatorio', function (req, res) {
     res.render('loginRelatorio');
-    console.log('loginRelatorio');
 });
 
 app.post('/relatorioAluno', function (req, res) {
