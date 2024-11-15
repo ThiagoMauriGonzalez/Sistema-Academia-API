@@ -79,6 +79,46 @@ app.get('/catraca', function (req, res) {
     res.render('catraca');
 });
 
+app.post('/registroentrada', function (req, res){
+    
+    let matricula = req.body.matricula;
+    let horaent = req.getCurrentDateEntry();
+
+    //SQL
+    let sql = `INSERT INTO CATRACA (ID_ALUNO, HORARIO_INCIO) VALUES (${matricula}, ${horaent})`;
+
+    //executando o comando
+    conexao.query(sql, function(erro, retorno){
+        //erro
+        if(erro) throw erro;
+
+        //se deu certo
+        console.log(retorno);
+
+    });
+    
+});
+
+app.post('/registrosaida', function (req, res){
+    
+    let matricula = req.body.matricula;
+    let horasaid = req.getCurrentDateExit();
+
+    //SQL
+    let sql = `INSERT INTO CATRACA (ID_ALUNO, HORARIO_SAIDA) VALUES (${matricula}, ${horasaid})`;
+
+    //executando o comando
+    conexao.query(sql, function(erro, retorno){
+        //erro
+        if(erro) throw erro;
+
+        //se deu certo
+        console.log(retorno);
+
+    });
+    
+});
+
 app.get('/gerenciamento', function (req, res) {
     //SQL 
     let sql = 'SELECT * FROM ALUNOS';

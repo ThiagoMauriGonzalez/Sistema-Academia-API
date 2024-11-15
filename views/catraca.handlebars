@@ -4,8 +4,12 @@
       <h1 class="title">Catraca da Academia</h1>
 
         <div class="btnContainer" >
-            <button id="btnentrada">Entrada</button>
-            <button id="btnsaida">Saída</button>
+            <form id="entrada" method="POST" action="localhost:8080/registroentrada">
+                <button onclick= "getCurrentDateTime()" type="submit">Entrada</button>
+            </form>
+            <form id="saida" method="POST" action="localhost:8080/registrosaida">
+                <button id="btnsaida">Saída</button>
+            </form>
             <button id="btnrelatorio">Relatório</button>
         </div>
     </div>
