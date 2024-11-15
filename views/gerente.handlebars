@@ -1,0 +1,29 @@
+<main>
+  <link rel="stylesheet" href="css/gerente.css" />
+  <div class="backgroundCinza">
+    <h1 class="title">Gerenciamento da Academia</h1>
+
+    {{!--Listagem de alunos --}}
+    <div class="container">
+      <div class="row">
+        {{#each alunos}}
+        <div class="product-card">
+          <div class="card">
+            <div class="text-content">
+              <p>Matricula: {{MATRICULA}}</p>
+              <p>Nome: {{NOME}}</p>
+              <p>CPF: {{CPF}}</p>
+              <p>Email: {{EMAIL}}</p>
+              <p>Altura: {{ALTURA}} cm</p>
+              <p>Peso: {{PESO}} kg</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+  </div>
+
+<main>
+

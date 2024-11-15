@@ -1,0 +1,83 @@
+/* Importa a fonte Chakra Petch do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Estiliza o corpo da página */
+body {
+    font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
+    background-color: #DDDDDD; /* Cor de fundo da página */
+    display: flex; /* Usa Flexbox para layout */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: flex-start; /* Alinha os itens no topo da tela */
+    min-height: 100vh; /* Garante que o body ocupe 100% da altura da tela */
+    margin: 0; /* Remove a margem padrão do body */
+}
+
+/* Estilo do container que envolve o conteúdo */
+.backgroundCinza {
+    background: #363636; /* Cor de fundo dos itens */
+    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 50px; /* Ajuste o espaçamento interno, diminuindo de 100px para 50px */
+    display: flex; /* Usa Flexbox para o container */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: flex-start; /* Mantém os itens no topo */
+    width: 100%; /* Garante que o contêiner ocupe toda a largura */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo do tamanho */
+    max-width: 1200px; /* Limita a largura máxima do conteúdo */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    height: 100%; /* Garante que a altura do contêiner ocupe a altura restante da tela */
+    margin: 2rem 0;
+}
+
+/* Estilo do título principal */
+h1 {
+    border: none; /* Remove qualquer borda ao redor do elemento h1 */
+    background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior, sem espaçamento nas laterais */
+    width: 20em; /* Define a largura do h1 */
+    text-align: center; /* Centraliza o texto dentro do h1 */
+    margin: 20px 0; /* Espaçamento vertical */
+}
+
+/* Container de cartões, com largura total e comportamento de rolagem */
+.container {
+    width: 100%; /* Ocupa toda a largura da seção */
+    display: block; /* Exibe os cartões em uma coluna */
+    gap: 20px; /* Espaço entre os cartões */
+    justify-content: flex-start; /* Alinha os itens ao topo */
+    max-height: 60vh; /* Limita a altura do container a 60% da altura da tela */
+    overflow-y: auto; /* Garante que a rolagem seja ativada somente dentro do container */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+    margin-top: 20px; /* Adiciona um pequeno espaço acima do container */
+}
+
+/* Cada linha de cartões */
+.row {
+    display: block; /* Exibe cada cartão em uma linha */
+}
+
+/* Estilo individual para cada cartão */
+.product-card {
+    width: 100%; /* Cada cartão ocupa 100% da largura disponível */
+    margin: 10px 0; /* Espaço entre os cartões */
+    box-sizing: border-box; /* Garante que padding e bordas não afetem a largura */
+}
+
+/* Estilo do conteúdo de cada cartão */
+.card {
+    border: 1px solid #ccc; /* Borda fina em torno do cartão */
+    padding: 15px; /* Espaçamento interno do cartão */
+    border-radius: 5px; /* Cantos arredondados */
+    text-align: left; /* Alinha o texto à esquerda dentro do cartão */
+    background-color: transparent; /* Fundo transparente */
+}
+
+/* Estilo para os parágrafos dentro do conteúdo do cartão */
+.text-content p {
+    margin: 8px 0; /* Espaçamento entre os parágrafos */
+    font-size: 1.1em; /* Tamanho da fonte */
+    color: #fff; /* Cor branca para o texto */
+    font-weight: 500; /* Peso da fonte */
+}

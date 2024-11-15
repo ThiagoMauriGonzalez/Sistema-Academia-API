@@ -1,0 +1,49 @@
+/* Importa a fonte Chakra Petch do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Estiliza o corpo da página */
+body {
+    font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
+    background-color: #DDDDDD; /* Cor de fundo da página */
+    display: flex; /* Usa Flexbox para layout */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    height: 100vh; /* Preenche a altura total da viewport */
+}
+
+.backgroundCinza {
+    background: #363636; /* Cor de fundo dos itens */
+    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 100px; /* Espaçamento interno de 100px em todas as direções */
+    display: flex; /* Usa Flexbox para o container */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+}
+
+h1 {
+    border: none; /* Remove qualquer borda ao redor do elemento h1 */
+    background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior, sem espaçamento nas laterais */
+    width: 20em; /* Define a largura do h1 */
+    text-align: center; /* Centraliza o texto dentro do h1 */
+    margin: 20px 0; /* Espaçamento vertical */
+}
+
+.btnContainer {
+    display: flex; /* Usa Flexbox para os botões */
+    gap: 20px; /* Espaçamento entre os botões */
+    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+}
+
+button {
+    padding: 0.8rem 1.2rem; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 1.5rem; /* Borda arredondada */
+    background-color: #FA5A50; /* Cor de fundo do botão */
+    color: #F5F7F8; /* Cor do texto do botão */
+    font-size: 1rem; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}

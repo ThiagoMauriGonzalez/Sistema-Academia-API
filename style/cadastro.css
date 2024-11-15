@@ -1,0 +1,104 @@
+/* Importa a fonte Chakra Petch do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Estiliza o corpo da página */
+body {
+    font-family: "Chakra etch", sans-serif; /* Define a fonte padrão */
+    background-color: #DDDDDD; /* Cor de fundo da página */
+    display: flex; /* Usa Flexbox para layout */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    height: 105vh; /* Preenche a altura total da viewport */
+}
+
+h1{
+    border: none; /* Remove qualquer borda ao redor do elemento h1 */
+    background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior, sem espaçamento nas laterais */
+    width: 20em; /* Define a largura do h1 como (relativo ao tamanho da fonte) */
+    text-align: center; /* Centraliza o texto dentro do h1 */
+    transform: translateY(-200%); /* Move o h1 sua altura para cima */
+    margin-right:auto; /*para deixar no meio*/
+    margin-left: auto;
+}
+
+img {
+    width: 200px; /* ajuste o valor para o tamanho desejado */
+    height: auto; /* mantém a proporção */
+}
+
+form{
+    background: #363636; /* Define a cor de fundo do formulário como cinza escuro */
+}
+
+div{
+    background: #363636; /* Cor de fundo dos itens */
+    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding-inline-start: 100px; /* Espaçamento interno de 100px no início da linha */
+    padding-inline-end: 100px; /* Espaçamento interno de 100px no final da linha */
+    padding-block: 100px; /* Espaçamento interno de 100px no topo e no fundo */
+}
+
+section button {
+    padding: 0.8rem 1.2rem; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 1.5rem; /* Borda arredondada */
+    background-color: #FA5A50; /* Cor de fundo do botão */
+    color: #F5F7F8; /* Cor do texto do botão */
+    font-size: 1rem; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding-left: 8em; /* Adiciona 8em de espaço interno à esquerda do elemento */
+    padding-right: 8em; /* Adiciona 8em de espaço interno à direita do elemento */
+    transform: translateX(39em); /* Move o elemento 13em para a direita */
+}
+
+/* Estiliza os inputs dentro das seções */
+section input {
+    background-color: #696969;
+    border: none; /* Remove a borda padrão */
+    padding: 0.8rem 2.3rem; /* Espaçamento interno */
+    margin-bottom: 1rem; /* Espaçamento abaixo dos inputs */
+    color: #FFFFFF; /* Cor do texto */
+    font-size: 1rem; /* Tamanho da fonte */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    margin-left: 15px; /* Cria um espaço de 15px à esquerda do elemento */ 
+}
+
+label{
+    padding: 0.8rem 2.3rem; /* Espaçamento interno */
+    background: #D3D3D3; /* Cor de fundo cinza claro */
+    border: none; /* Remove a borda */
+    display: inline; /* para deixar o input na mesma linha */
+}
+
+.lado{
+    display: inline; /* Exibe o elemento na mesma linha que outros elementos */
+    margin-left: 150px; /* Espaço de 150px à esquerda do elemento */
+}
+
+.selecionar{
+    background: none; /* Remove o fundo */
+    color: #DDDDDD; /* Cor do texto cinza claro */
+}
+
+/* Estilizando os inputs do tipo radio */
+input[type="radio"] {
+    margin-right: -30px; /* Move o elemento 30px para a esquerda em relação ao seu contêiner */
+    cursor: pointer; /* Mostra um cursor de "mão" ao passar por cima */
+}
+
+/* Estilizando o label para o input radio */
+input[type="radio"] + label {
+    margin-left: 5px; /* Espaçamento entre o rádio e o texto */
+}
+
+img {
+    display: block;  /* Define o elemento como um bloco, ocupando toda a largura disponível */
+    margin: 0 auto;  /* Centraliza o elemento horizontalmente */
+    transform: translateY(-40%);  /* Move o elemento 40% para cima em relação à sua posição original no eixo vertical (Y) */
+    max-width: 100%;  /* Faz a imagem não ultrapassar a largura da div */
+    height: auto;  /* Mantém a proporção da imagem */
+}
+

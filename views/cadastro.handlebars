@@ -1,0 +1,35 @@
+<main>
+    <link rel="stylesheet" href="css/cadastro.css" />
+    <section>
+        <form id="cadastroForm" action="http://localhost:8080/cadastrar" method="post">
+            <div class="cadastro">
+                <h1>Dynamic FIT</h1>
+                <img src="image/images.jpeg.png">
+
+                <label for="nome">Nome: </label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label class="lado" for="altura">Altura em cm: </label>
+                <input type="text" id="altura" name="altura_em_cm" required>
+
+                <br><br><br>
+
+                <label for="cpf">CPF: </label>
+                <input type="text" id="cpf" name="cpf" required>
+
+                <label class="lado" for="peso">Peso em kg: </label>
+                <input type="text" id="peso" name="peso_em_kg" required>
+
+                <br><br><br>
+
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" required>
+
+                <br><br><br>
+
+                <button type="submit">Cadastrar-se</button>
+            </div>
+        </form>
+    </section>
+    <script src="javascript/script.js"></script>
+</main>
