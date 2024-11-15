@@ -4,11 +4,16 @@
       <h1 class="title">Catraca da Academia</h1>
 
         <div class="btnContainer" >
-            <button id="btnCadastro">Entrada</button>
-            <button id="btnLogin">Saída</button>
+            <form id="entrada" method="POST" action="localhost:8080/registroentrada">
+                <button onclick= "getCurrentDateTime()" type="submit">Entrada</button>
+            </form>
+            <form id="saida" method="POST" action="localhost:8080/registrosaida">
+                <button id="btnsaida">Saída</button>
+            </form>
             <a href="/loginRelatorio">
                 <button id="btnrelatorio">Relatório</button>
             </a>
         </div>
     </div>
+    <script src="../js/catraca.js"></script>
 <main>
