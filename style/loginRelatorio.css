@@ -1,0 +1,87 @@
+/* Importa a fonte Chakra Petch do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap');
+
+/* Estiliza o corpo da página */
+body {
+    font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
+    background-color: #DDDDDD; /* Cor de fundo da página */
+    display: flex; /* Usa Flexbox para layout */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    height: 105vh; /* Preenche a altura total da viewport */
+}
+
+/* Estilo para o título */
+h1 {
+    border: none; /* Remove qualquer borda ao redor do elemento h1 */
+    background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior */
+    width: 20em; /* Define a largura do h1 */
+    text-align: center; /* Centraliza o texto dentro do h1 */
+    margin: 0 auto 2rem; /* Centraliza e adiciona margem inferior */
+}
+
+/* Centraliza o formulário e ajusta o layout */
+.cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #363636; /* Cor de fundo do formulário */
+    padding: 2rem;
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+/* Container para o label e o input */
+.cadastro div {
+    display: flex;
+    align-items: center; /* Alinha o label e o input verticalmente */
+    gap: 0.5rem; /* Espaçamento entre o label e o input */
+    margin-bottom: 1rem; /* Espaçamento abaixo do conjunto */
+}
+
+/* Estilo para o input de texto */
+.cadastro input[type="text"] {
+    background-color: #696969; /* Cor de fundo do input */
+    border: none; /* Remove a borda padrão */
+    padding: 0.8rem 1.2rem; /* Ajuste do espaçamento interno */
+    color: #FFFFFF; /* Cor do texto */
+    font-size: 1rem; /* Tamanho da fonte */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    text-align: center; /* Centraliza o texto dentro do input */
+    width: 200px; /* Define uma largura fixa para o input */
+}
+
+/* Estilo para o botão de envio */
+.cadastro button[type="submit"] {
+    padding: 0.8rem 1.2rem; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 1.5rem; /* Borda arredondada */
+    background-color: #FA5A50; /* Cor de fundo do botão */
+    color: #F5F7F8; /* Cor do texto do botão */
+    font-size: 1rem; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    width: 100%; /* Expande o botão na largura do input */
+    margin-top: 1rem; /* Espaçamento entre o input e o botão */
+}
+
+/* Estilização para a imagem (caso necessário) */
+img {
+    width: 200px; /* Ajuste o valor para o tamanho desejado */
+    height: auto; /* Mantém a proporção */
+    display: block; /* Define o elemento como um bloco */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+    transform: translateY(-40%); /* Move a imagem para cima */
+    max-width: 100%; /* Faz a imagem não ultrapassar a largura da div */
+}
+
+/* Estilo para labels */
+.cadastro label {
+    padding: 0.8rem 1rem; /* Espaçamento interno */
+    background: #D3D3D3; /* Cor de fundo cinza claro */
+    border: none; /* Remove a borda */
+    text-align: center; /* Centraliza o texto no label */
+    width: 80px; /* Define uma largura fixa para o label */
+}
+    

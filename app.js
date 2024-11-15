@@ -99,6 +99,37 @@ app.get('/users', function (req, res) {
     });
 });
 
+app.get('/loginRelatorio', function (req, res) {
+    res.render('loginRelatorio');
+    console.log('loginRelatorio');
+});
+
+app.post('/relatorioAluno', function (req, res) {
+    let matricula = req.body.matricula;
+    
+    // SQL para buscar os dados do aluno pela matrícula
+    let sql = 'SELECT * FROM ALUNOS WHERE MATRICULA = ?';
+    
+    conexao.query(sql, [matricula], function(erro, retorno) {
+        if(erro) throw erro;
+        
+        if(retorno.length > 0) {
+            // Envia os dados do aluno para o template
+            res.render('relatorioAluno', {
+                MATRICULA: retorno[0].MATRICULA,
+                NOME: retorno[0].NOME,
+                CPF: retorno[0].CPF,
+                EMAIL: retorno[0].EMAIL,
+                ALTURA: retorno[0].ALTURA,
+                PESO: retorno[0].PESO
+            });
+        } else {
+            res.send('Aluno não encontrado');
+        }
+    });
+});
+
+
 // Criando servidor
 app.listen(8080, () => {
     console.log('Servidor rodando na porta 8080');
