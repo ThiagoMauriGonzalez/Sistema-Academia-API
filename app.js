@@ -96,7 +96,6 @@ app.post('/registroentrada', function (req, res){
         console.log(retorno);
 
     });
-    
 });
 
 app.post('/registrosaida', function (req, res){
@@ -116,7 +115,6 @@ app.post('/registrosaida', function (req, res){
         console.log(retorno);
 
     });
-    
 });
 
 app.get('/gerenciamento', function (req, res) {
