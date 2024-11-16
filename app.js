@@ -48,7 +48,6 @@ app.get('/', function (req, res) {
 app.get('/cadastro', function (req, res) {
     res.render('cadastro');
 });
-
 // Rota de cadastro
 app.post('/cadastrar', function (req, res) {
     //obter os dados que serão utilizados para cadastro
@@ -68,11 +67,13 @@ app.post('/cadastrar', function (req, res) {
 
         //se deu certo
         console.log(retorno);
-
+        
+        // Retorna a matrícula (ID) gerada
+        res.json({
+            matricula: retorno.insertId,
+            mensagem: "Cadastro realizado com sucesso!"
+        });
     });
-
-    //retornando para a rota principal
-    res.redirect('/');
 });
 
 app.get('/catraca', function (req, res) {
