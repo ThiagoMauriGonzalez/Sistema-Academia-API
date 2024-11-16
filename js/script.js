@@ -77,7 +77,8 @@ document.querySelector("#cadastroForm").addEventListener("submit", function (eve
     })
     .then(data => {
         alert("Cadastro realizado com sucesso. Sua matrícula é: " + data.matricula);
-        // Redirecionar para outra rota
+        
+        // Redirecionar para rota principal
         window.location.href = '/';
     })
     .catch(error => {
