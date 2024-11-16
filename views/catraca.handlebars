@@ -1,16 +1,16 @@
 <main>
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="/css/catraca.css" />
     <div class="backgroundCinza">
-      <h1 class="title">Catraca da Academia</h1>
-
-        <div class="btnContainer" >
-            <form id="entrada" method="POST" action="localhost:8080/registroentrada">
-                <button onclick= "getCurrentDateTime()" type="submit">Entrada</button>
-            </form>
-            <form id="saida" method="POST" action="localhost:8080/registrosaida">
-                <button id="btnsaida">Saída</button>
-            </form>
+        <h1 class="title">Catraca da Academia</h1>
+        
+        <div class="cadastro">
+            <label for="matricula" type="label">Matrícula: </label>
+            <input type="text" id="matricula" name="matricula" required>
+        </div>
+        <div class="btnContainer">
+            <button id="btnEntrada" class="btn-entrada">Entrada</button>
+            <button id="btnSaida" class="btn-saida">Saída</button>
         </div>
     </div>
     <script src="../js/catraca.js"></script>
-<main>
+</main>
