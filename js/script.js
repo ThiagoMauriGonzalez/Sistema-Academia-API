@@ -42,7 +42,7 @@ function validarCPF(cpf) {
 // Chama a função de validação de CPF no envio do formulário
 document.querySelector("#cadastroForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Impede o envio padrão do formulário
-    
+
     const cpf = document.getElementById("cpf").value;
     if (!validarCPF(cpf)) {
         alert("CPF inválido! Por favor, insira um CPF válido.");
@@ -66,12 +66,22 @@ document.querySelector("#cadastroForm").addEventListener("submit", function (eve
         },
         body: JSON.stringify(formData)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // Caso o servidor retorne erro
+            return response.json().then(data => {
+                throw new Error(data.mensagem);
+            });
+        }
+        return response.json();
+    })
     .then(data => {
-        alert("Sua matrícula é: " + data.matricula);
+        alert("Cadastro realizado com sucesso. Sua matrícula é: " + data.matricula);
+        // Redirecionar para outra rota
+        window.location.href = '/';
     })
     .catch(error => {
-        console.error('Erro:', error);
-        alert("Erro ao cadastrar");
+        // Exibe a mensagem de erro do servidor
+        alert(error.message); 
     });
 });
