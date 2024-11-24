@@ -11,6 +11,60 @@
             <button id="btnEntrada" class="btn-entrada">Entrada</button>
             <button id="btnSaida" class="btn-saida">Saída</button>
         </div>
+        <div id="mensagem"></div>
     </div>
-    <script src="../js/catraca.js"></script>
+    <script>
+    //ENTRADA
+        document.getElementById('btnEntrada').addEventListener('click', async () => {
+            const matricula = document.getElementById('matricula').value;
+            try {
+                const response = await fetch('/registroentrada', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ matricula })
+                });
+                const data = await response.json();
+                const horaAtual = new Date().toLocaleTimeString();
+                
+                // Verifica se já existe uma entrada sem saída registrada
+                const entradaRegistradaJaExiste = data.entradaExistente;
+                if (entradaRegistradaJaExiste) {
+                    const horaFormatada = new Date(data.horaEntrada).toLocaleString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    alert(`${data.mensagem} - Hora da primeira entrada: ${horaFormatada}`);
+                } else {
+                    alert(`${data.mensagem} - Hora: ${horaAtual}`);
+                }
+            } catch (error) {
+                alert('Erro ao registrar entrada');
+            }
+        });
+
+    //SAIDA
+        document.getElementById('btnSaida').addEventListener('click', async () => {
+            const matricula = document.getElementById('matricula').value;
+            try {
+                const response = await fetch('/registrosaida', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ matricula })
+                });
+                const data = await response.json();
+                const horaAtual = new Date().toLocaleTimeString();
+                alert(`${data.mensagem} - Hora: ${horaAtual}`);
+            } catch (error) {
+                alert('Erro ao registrar saída');
+            }
+        });
+    </script>
 </main>

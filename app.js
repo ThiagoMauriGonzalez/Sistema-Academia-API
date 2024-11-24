@@ -111,42 +111,178 @@ app.get('/catraca', function (req, res) {
     res.render('catraca');
 });
 
+//ENTRADA da catraca    
 app.post('/registroentrada', function (req, res) {
-
     let matricula = req.body.matricula;
-    let horaent = req.getCurrentDateEntry();
+    // Ajustando o horário para o fuso horário local (UTC-3)
+    let horaEntrada = new Date();
+    horaEntrada.setHours(horaEntrada.getHours() - 3);
+    horaEntrada = horaEntrada.toISOString().slice(0, 19).replace('T', ' ');
 
-    //SQL
-    let sql = `INSERT INTO CATRACA (ID_ALUNO, HORARIO_INCIO) VALUES (${matricula}, ${horaent})`;
+    // Primeiro verifica se o aluno existe
+    let sqlVerificaAluno = `SELECT * FROM ALUNOS WHERE MATRICULA = ?`;
+    
+    conexao.query(sqlVerificaAluno, [matricula], function(erro, retornoAluno) {
+        if (erro) {
+            console.error('Erro ao verificar matrícula:', erro);
+            return res.status(500).json({ mensagem: 'Erro ao verificar matrícula' });
+        }
 
-    //executando o comando
-    conexao.query(sql, function (erro, retorno) {
-        //erro
-        if (erro) throw erro;
+        if (retornoAluno.length === 0) {
+            return res.status(404).json({ mensagem: 'Aluno não encontrado' });
+        }
 
-        //se deu certo
-        console.log(retorno);
+        // Verifica se já existe uma entrada sem saída
+        let sqlVerificaEntrada = `SELECT * FROM CATRACA WHERE ID_ALUNO = ? AND HORARIO_SAIDA IS NULL`;
+        
+        conexao.query(sqlVerificaEntrada, [matricula], function(erro, retornoEntrada) {
+            if (erro) {
+                console.error('Erro ao verificar entrada:', erro);
+                return res.status(500).json({ mensagem: 'Erro ao verificar entrada existente' });
+            }
 
+            if (retornoEntrada.length > 0) {
+                // Ajustando o horário da entrada existente para o fuso horário local
+                const horaEntradaLocal = new Date(retornoEntrada[0].HORARIO_INICIO);
+                horaEntradaLocal.setHours(horaEntradaLocal.getHours() - 3);
+                
+                return res.status(400).json({ 
+                    mensagem: 'Aluno já possui entrada registrada',
+                    entradaExistente: true,
+                    horaEntrada: horaEntradaLocal
+                });
+            }
+
+            let sql = `INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO) VALUES (?, ?)`;
+
+            conexao.query(sql, [matricula, horaEntrada], function (erro, retorno) {
+                if (erro) {
+                    console.error('Erro ao registrar entrada:', erro);
+                    return res.status(500).json({ mensagem: 'Erro ao registrar entrada' });
+                }
+
+                // Verifica se já existe registro na tabela RELATORIO
+                let sqlVerificaRelatorio = `SELECT * FROM RELATORIO WHERE ID_ALUNO = ?`;
+                conexao.query(sqlVerificaRelatorio, [matricula], function(erro, retornoRelatorio) {
+                    if (erro) {
+                        console.error('Erro ao verificar relatório:', erro);
+                        return res.status(500).json({ mensagem: 'Erro ao verificar relatório' });
+                    }
+
+                    if (retornoRelatorio.length === 0) {
+                        // Se não existe, insere novo registro
+                        let sqlInsertRelatorio = `INSERT INTO RELATORIO (ID_ALUNO) VALUES (?)`;
+                        conexao.query(sqlInsertRelatorio, [matricula], function(erro) {
+                            if (erro) {
+                                console.error('Erro ao criar relatório:', erro);
+                                return res.status(500).json({ mensagem: 'Erro ao criar relatório' });
+                            }
+                        });
+                    }
+                });
+
+                return res.status(200).json({ 
+                    mensagem: 'Entrada registrada com sucesso',
+                    aluno: retornoAluno[0].NOME
+                });
+            });
+        });
     });
 });
 
-
+//SAIDA da catraca
 app.post('/registrosaida', function (req, res) {
-
     let matricula = req.body.matricula;
-    let horasaid = req.getCurrentDateExit();
+    let horaSaida = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-    //SQL
-    let sql = `INSERT INTO CATRACA (ID_ALUNO, HORARIO_SAIDA) VALUES (${matricula}, ${horasaid})`;
+    // Primeiro verifica se o aluno existe
+    let sqlVerificaAluno = `SELECT * FROM ALUNOS WHERE MATRICULA = ?`;
+    
+    conexao.query(sqlVerificaAluno, [matricula], function(erro, retornoAluno) {
+        if (erro) {
+            console.error('Erro ao verificar matrícula:', erro);
+            return res.status(500).json({ mensagem: 'Erro ao verificar matrícula' });
+        }
 
-    //executando o comando
-    conexao.query(sql, function (erro, retorno) {
-        //erro
-        if (erro) throw erro;
+        if (retornoAluno.length === 0) {
+            return res.status(404).json({ mensagem: 'Aluno não encontrado' });
+        }
 
-        //se deu certo
-        console.log(retorno);
+        let sql = `UPDATE CATRACA SET HORARIO_SAIDA = ? 
+                   WHERE ID_ALUNO = ? 
+                   AND HORARIO_SAIDA IS NULL 
+                   ORDER BY HORARIO_INICIO DESC LIMIT 1`;
 
+        conexao.query(sql, [horaSaida, matricula], function (erro, retorno) {
+            if (erro) {
+                console.error('Erro ao registrar saída:', erro);
+                return res.status(500).json({ mensagem: 'Erro ao registrar saída' });
+            }
+            
+            if (retorno.affectedRows === 0) {
+                return res.status(400).json({ mensagem: 'Não há entrada registrada para este aluno' });
+            }
+
+            // Calcula tempo total e atualiza relatório
+            let sqlTempoTotal = `
+                SELECT 
+                    SEC_TO_TIME(SUM(
+                        CASE 
+                            WHEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO)) < 3600
+                            THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
+                            ELSE TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
+                        END
+                    )) as tempo_total,
+                    SEC_TO_TIME(SUM(
+                        CASE 
+                            WHEN HORARIO_INICIO >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND
+                                 TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO)) < 3600
+                            THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
+                            WHEN HORARIO_INICIO >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+                            THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
+                            ELSE 0
+                        END
+                    )) as tempo_semanal
+                FROM CATRACA 
+                WHERE ID_ALUNO = ? AND HORARIO_SAIDA IS NOT NULL`;
+
+            conexao.query(sqlTempoTotal, [matricula], function(erro, retornoTempo) {
+                if (erro) {
+                    console.error('Erro ao calcular tempo:', erro);
+                    return res.status(500).json({ mensagem: 'Erro ao calcular tempo' });
+                }
+
+                let tempoTotal = retornoTempo[0].tempo_total;
+                let tempoSemanal = retornoTempo[0].tempo_semanal;
+
+                // Define classificação baseada no tempo semanal
+                let classificacao = 'Iniciante';
+                let tempoSemanalHoras = parseInt(tempoSemanal.split(':')[0]);
+                
+                if (tempoSemanalHoras > 5 && tempoSemanalHoras <= 10) classificacao = 'Intermediário';
+                if (tempoSemanalHoras > 10 && tempoSemanalHoras <= 20) classificacao = 'Avançado';
+                if (tempoSemanalHoras > 20) classificacao = 'Extremamente Avançado';
+
+                let sqlUpdateRelatorio = `
+                    UPDATE RELATORIO 
+                    SET HORAS_TOTAIS = ?,
+                        HORAS_SEMANAIS = ?,
+                        CLASSIFICACAO = ?
+                    WHERE ID_ALUNO = ?`;
+
+                conexao.query(sqlUpdateRelatorio, [tempoTotal, tempoSemanal, classificacao, matricula], function(erro) {
+                    if (erro) {
+                        console.error('Erro ao atualizar relatório:', erro);
+                        return res.status(500).json({ mensagem: 'Erro ao atualizar relatório' });
+                    }
+                    
+                    return res.status(200).json({ 
+                        mensagem: 'Saída registrada com sucesso',
+                        aluno: retornoAluno[0].NOME
+                    });
+                });
+            });
+        });
     });
 });
 
