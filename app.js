@@ -144,7 +144,7 @@ app.post('/registroentrada', function (req, res) {
             if (retornoEntrada.length > 0) {
                 // Ajustando o horário da entrada existente para o fuso horário local
                 const horaEntradaLocal = new Date(retornoEntrada[0].HORARIO_INICIO);
-                horaEntradaLocal.setHours(horaEntradaLocal.getHours() - 3);
+                horaEntradaLocal.setHours(horaEntradaLocal.getHours() );
                 
                 return res.status(400).json({ 
                     mensagem: 'Aluno já possui entrada registrada',
@@ -193,7 +193,9 @@ app.post('/registroentrada', function (req, res) {
 //SAIDA da catraca
 app.post('/registrosaida', function (req, res) {
     let matricula = req.body.matricula;
-    let horaSaida = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let horaSaida = new Date();
+    horaSaida.setHours(horaSaida.getHours() - 3);
+    horaSaida = horaSaida.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
     let sqlVerificaAluno = `SELECT * FROM ALUNOS WHERE MATRICULA = ?`;
