@@ -73,6 +73,14 @@ label{
     display: inline; /* para deixar o input na mesma linha */
 }
 
+.cpf{
+    padding: 0.8rem 2.6rem; /* Espaçamento interno */
+    background: #D3D3D3; /* Cor de fundo cinza claro */
+    border: none; /* Remove a borda */
+    display: inline; /* para deixar o input na mesma linha */
+}
+
+
 .lado{
     display: inline; /* Exibe o elemento na mesma linha que outros elementos */
     margin-left: 150px; /* Espaço de 150px à esquerda do elemento */
