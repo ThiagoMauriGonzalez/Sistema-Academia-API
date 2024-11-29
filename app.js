@@ -315,33 +315,57 @@ app.get('/loginRelatorio', function (req, res) {
     res.render('loginRelatorio');
 });
 
-app.post('/relatorioAluno', function (req, res) {
+app.post('/relatorioAluno', async function (req, res) {
     let matricula = req.body.matricula;
 
-    // SQL para buscar os dados do aluno pela matrícula
-    let sql = 'SELECT * FROM ALUNOS WHERE MATRICULA = ?';
+    try {
+        // Promessa para a primeira query
+        const alunoQuery = new Promise((resolve, reject) => {
+            let sql = 'SELECT * FROM ALUNOS WHERE MATRICULA = ?';
+            conexao.query(sql, [matricula], (erro, resultado) => {
+                if (erro) return reject(erro);
+                resolve(resultado);
+            });
+        });
 
-    conexao.query(sql, [matricula], function (erro, retorno) {
-        if (erro) throw erro;
+        // Promessa para a segunda query
+        const relatorioQuery = new Promise((resolve, reject) => {
+            let sqlhoras = 'SELECT HORAS_SEMANAIS, CLASSIFICACAO FROM RELATORIO WHERE ID_ALUNO = ?';
+            conexao.query(sqlhoras, [matricula], (erro, resultado) => {
+                if (erro) return reject(erro);
+                resolve(resultado);
+            });
+        });
 
-        if (retorno.length > 0) {
-            // Envia os dados do aluno para o template
+        // Executa as duas queries
+        const [dadosAluno, dadosRelatorio] = await Promise.all([alunoQuery, relatorioQuery]);
+
+        // Verifica os resultados e renderiza o template
+        if (dadosAluno.length > 0 && dadosRelatorio.length > 0) {
             res.render('relatorioAluno', {
-                MATRICULA: retorno[0].MATRICULA,
-                NOME: retorno[0].NOME,
-                CPF: retorno[0].CPF,
-                EMAIL: retorno[0].EMAIL,
-                ALTURA: retorno[0].ALTURA,
-                PESO: retorno[0].PESO
+                MATRICULA: dadosAluno[0].MATRICULA,
+                NOME: dadosAluno[0].NOME,
+                CPF: dadosAluno[0].CPF,
+                EMAIL: dadosAluno[0].EMAIL,
+                ALTURA: dadosAluno[0].ALTURA,
+                PESO: dadosAluno[0].PESO,
+                HORAS_SEMANAIS: dadosRelatorio[0].HORAS_SEMANAIS,
+                CLASSIFICACAO: dadosRelatorio[0].CLASSIFICACAO
             });
         } else {
-            res.send('Aluno não encontrado');
+            res.send('Aluno ou relatório não encontrado');
         }
-    });
+    } catch (erro) {
+        console.error('Erro ao buscar dados:', erro);
+        res.status(500).send('Erro interno do servidor');
+    }
 });
+
+
 
 
 // Criando servidor
 app.listen(8080, () => {
     console.log('Servidor rodando na porta 8080');
 });
+ 
