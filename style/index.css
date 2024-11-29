@@ -10,6 +10,15 @@ body {
     align-items: center; /* Centraliza os itens horizontalmente */
     justify-content: center; /* Centraliza os itens verticalmente */
     height: 100vh; /* Preenche a altura total da viewport */
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove espaçamentos */
+    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
+}
+
+@keyframes backgroundTransition {
+    0% { background-color: #696969; }
+    50% { background-color: #404040; }
+    100% { background-color: #696969; }
 }
 
 .backgroundCinza {
@@ -21,6 +30,7 @@ body {
     flex-direction: column; /* Alinha os itens na vertical */
     align-items: center; /* Centraliza os itens horizontalmente */
     justify-content: center; /* Centraliza os itens verticalmente */
+    border-radius: 8px; /* Borda arredondada */
 }
 
 h1 {
@@ -30,12 +40,16 @@ h1 {
     width: 20em; /* Define a largura do h1 */
     text-align: center; /* Centraliza o texto dentro do h1 */
     margin: 20px 0; /* Espaçamento vertical */
+    font-size: 2rem; /* Tamanho da fonte */
+    color: #222222; /* Cor do texto */
+    border-radius: 8px; /* Borda arredondada */
 }
 
 .btnContainer {
     display: flex; /* Usa Flexbox para os botões */
     gap: 20px; /* Espaçamento entre os botões */
     margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+    margin-top: 1rem; /* Adiciona espaço entre o input e os botões */
 }
 
 button {
@@ -46,4 +60,35 @@ button {
     color: #F5F7F8; /* Cor do texto do botão */
     font-size: 1rem; /* Tamanho da fonte */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+    font-family: "Chakra Petch", sans-serif; /* Altera a fonte dos botões para a mesma do título */
+}
+
+button:hover {
+    background-color: #E74C3C; /* Cor de fundo do botão ao passar o mouse */
+}
+
+/* Estilizando os inputs do tipo radio */
+input[type="radio"] {
+    margin-right: 10px; /* Espaçamento à direita do input */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    appearance: none; /* Remove aparência padrão */
+    width: 20px; /* Largura do radio */
+    height: 20px; /* Altura do radio */
+    border: 2px solid #FA5A50; /* Borda vermelha */
+    border-radius: 50%; /* Formato circular */
+    background-color: transparent; /* Fundo transparente */
+}
+
+/* Estilo quando o radio está selecionado */
+input[type="radio"]:checked {
+    background-color: #FA5A50; /* Preenchimento vermelho quando selecionado */
+    border: 2px solid #FA5A50;
+}
+
+/* Estilizando o label para o input radio */
+input[type="radio"] + label {
+    margin-left: 10px; /* Espaçamento entre o radio e o texto */
+    color: #FFFFFF; /* Cor do texto branca */
+    cursor: pointer; /* Cursor de mão também no label */
 }

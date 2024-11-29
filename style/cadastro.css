@@ -3,13 +3,22 @@
 
 /* Estiliza o corpo da página */
 body {
-    font-family: "Chakra etch", sans-serif; /* Define a fonte padrão */
-    background-color: #DDDDDD; /* Cor de fundo da página */
+    font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
+    background-color: #404040; /* Cor de fundo da página */
     display: flex; /* Usa Flexbox para layout */
     flex-direction: column; /* Alinha os itens na vertical */
     align-items: center; /* Centraliza os itens horizontalmente */
     justify-content: center; /* Centraliza os itens verticalmente */
-    height: 105vh; /* Preenche a altura total da viewport */
+    height: 100vh; /* Preenche a altura total da viewport */
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove espaçamentos */
+    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
+}
+
+@keyframes backgroundTransition {
+    0% { background-color: #696969; }
+    50% { background-color: #404040; }
+    100% { background-color: #696969; }
 }
 
 h1{
@@ -36,9 +45,13 @@ div{
     background: #363636; /* Cor de fundo dos itens */
     margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    padding-inline-start: 100px; /* Espaçamento interno de 100px no início da linha */
-    padding-inline-end: 100px; /* Espaçamento interno de 100px no final da linha */
-    padding-block: 100px; /* Espaçamento interno de 100px no topo e no fundo */
+    padding: 100px; /* Espaçamento interno de 100px em todas as direções */
+    display: flex; /* Usa Flexbox para o container */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    border-radius: 8px; /* Borda arredondada */
+    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
 }
 
 section button {
@@ -109,4 +122,3 @@ img {
     max-width: 100%;  /* Faz a imagem não ultrapassar a largura da div */
     height: auto;  /* Mantém a proporção da imagem */
 }
-

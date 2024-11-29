@@ -4,22 +4,46 @@
 /* Estiliza o corpo da página */
 body {
     font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
-    background-color: #DDDDDD; /* Cor de fundo da página */
+    background-color: #404040; /* Cor de fundo da página */
     display: flex; /* Usa Flexbox para layout */
     flex-direction: column; /* Alinha os itens na vertical */
     align-items: center; /* Centraliza os itens horizontalmente */
     justify-content: center; /* Centraliza os itens verticalmente */
-    height: 105vh; /* Preenche a altura total da viewport */
+    height: 100vh; /* Preenche a altura total da viewport */
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove espaçamentos */
+    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
 }
 
-/* Estilo para o título */
+@keyframes backgroundTransition {
+    0% { background-color: #696969; }
+    50% { background-color: #404040; }
+    100% { background-color:#696969; }
+}
+
+.backgroundCinza {
+    background: #DDDDDD; /* Cor de fundo dos itens */
+    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 100px; /* Espaçamento interno de 100px em todas as direções */
+    display: flex; /* Usa Flexbox para o container */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    border-radius: 8px; /* Borda arredondada */
+}
+
+
 h1 {
     border: none; /* Remove qualquer borda ao redor do elemento h1 */
     background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
-    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior, sem espaçamento nas laterais */
     width: 20em; /* Define a largura do h1 */
     text-align: center; /* Centraliza o texto dentro do h1 */
-    margin: 0 auto 2rem; /* Centraliza e adiciona margem inferior */
+    margin: 20px 0; /* Espaçamento vertical */
+    font-size: 2rem; /* Tamanho da fonte */
+    color: #222222; /* Cor do texto */
+    border-radius: 8px; /* Borda arredondada */
 }
 
 /* Centraliza o formulário e ajusta o layout */
@@ -46,11 +70,13 @@ h1 {
     background-color: #696969; /* Cor de fundo do input */
     border: none; /* Remove a borda padrão */
     padding: 0.8rem 1.2rem; /* Ajuste do espaçamento interno */
-    color: #FFFFFF; /* Cor do texto */
+    color: #F5F7F8; /* Cor do texto */
     font-size: 1rem; /* Tamanho da fonte */
     box-sizing: border-box; /* Inclui padding e border na largura total */
     text-align: center; /* Centraliza o texto dentro do input */
     width: 200px; /* Define uma largura fixa para o input */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
 }
 
 /* Estilo para o botão de envio */
@@ -83,5 +109,7 @@ img {
     border: none; /* Remove a borda */
     text-align: center; /* Centraliza o texto no label */
     width: 80px; /* Define uma largura fixa para o label */
-}
-    
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    margin-right: 30px; /* Adiciona um espaçamento à direita */
+}    
