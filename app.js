@@ -193,7 +193,9 @@ app.post('/registroentrada', function (req, res) {
 app.post('/registrosaida', function (req, res) {
     let matricula = req.body.matricula;
     let horaSaida = new Date();
-    horaSaida.setHours(horaSaida.getHours() -3);
+    horaSaida.setSeconds(horaSaida.getSeconds()); // Corrigido para registrar os segundos
+    horaSaida.setMinutes(horaSaida.getMinutes());
+    horaSaida.setHours(horaSaida.getHours());
     horaSaida = horaSaida.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
