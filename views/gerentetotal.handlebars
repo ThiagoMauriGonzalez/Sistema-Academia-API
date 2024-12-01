@@ -1,0 +1,32 @@
+<main>
+  <link rel="stylesheet" href="css/gerente.css" />
+  <div class="backgroundCinza">
+    <h1 class="title">Relatório Total dos Alunos</h1>
+    <div class="container">
+      <div class="row">
+        {{#each alunos}}
+        <div class="product-card">
+          <div class="card">
+            <div class="text-content">
+              <p><strong>Matrícula:</strong> {{MATRICULA}}</p>
+              <p><strong>Nome:</strong> {{NOME}}</p>
+              
+              {{#if HORAS_TOTAIS}}
+                <p><strong>Horas treinadas:</strong> {{HORAS_TOTAIS}}</p>
+              {{else}}
+                <p><strong>Horas treinadas:</strong> Não informado</p>
+              {{/if}}
+
+              {{#if CLASSIFICACAO_TOTAL}}
+                <p><strong>Classificação:</strong> {{CLASSIFICACAO_TOTAL}}</p>
+              {{else}}
+                <p><strong>Classificação:</strong> Não informada</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</main>

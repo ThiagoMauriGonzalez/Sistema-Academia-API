@@ -1,29 +1,15 @@
 <main>
-  <link rel="stylesheet" href="css/gerente.css" />
-  <div class="backgroundCinza">
-    <h1 class="title">Gerenciamento da Academia</h1>
+    <link rel="stylesheet" href="css/index.css" />
+    <div class="backgroundCinza">
+      <h1 class="title">Sistema Gerencial</h1>
 
-    {{!--Listagem de alunos --}}
-    <div class="container">
-      <div class="row">
-        {{#each alunos}}
-        <div class="product-card">
-          <div class="card">
-            <div class="text-content">
-              <p>Matricula: {{MATRICULA}}</p>
-              <p>Nome: {{NOME}}</p>
-              <p>CPF: {{CPF}}</p>
-              <p>Email: {{EMAIL}}</p>
-              <p>Altura: {{ALTURA}} cm</p>
-              <p>Peso: {{PESO}} kg</p>
-            </div>
-          </div>
+        <div class="btnContainer">
+          <a href="/gerenciamentosemanal">
+            <button id="btnCadastro">Relatório Semanal</button>
+          </a>
+          <a href="/gerenciamentototal">
+            <button id="btnLogin">Relatório total</button>
+          </a>
         </div>
-        {{/each}}
-      </div>
     </div>
-
-  </div>
-
 <main>
-

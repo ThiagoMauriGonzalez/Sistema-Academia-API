@@ -54,7 +54,6 @@ conexao.connect(function (erro) {
 });
 
 
-
 // Rota principal
 app.get('/', function (req, res) {
     res.render('index');
@@ -258,21 +257,30 @@ app.post('/registrosaida', function (req, res) {
                 let tempoSemanal = retornoTempo[0].tempo_semanal;
 
                 // Define classificação baseada no tempo semanal
-                let classificacao = 'Iniciante';
-                let tempoSemanalHoras = parseInt(tempoSemanal.split(':')[0]);
+                function calcularClassificacao(tempo) {
+                    let horas = parseInt(tempo.split(':')[0]); // Extrair horas da string 'HH:MM:SS'
                 
-                if (tempoSemanalHoras > 5 && tempoSemanalHoras <= 10) classificacao = 'Intermediário';
-                if (tempoSemanalHoras > 10 && tempoSemanalHoras <= 20) classificacao = 'Avançado';
-                if (tempoSemanalHoras > 20) classificacao = 'Extremamente Avançado';
+                    if (horas <= 5) return 'Iniciante';
+                    if (horas > 5 && horas <= 10) return 'Intermediário';
+                    if (horas > 10 && horas <= 20) return 'Avançado';
+                    return 'Extremamente Avançado';
+                }
 
+                // Após o cálculo de tempo total e semanal
+                let classificacaoTotal = calcularClassificacao(tempoTotal);
+                let classificacaoSemanal = calcularClassificacao(tempoSemanal);
+
+                // Atualiza o relatório com as classificações
                 let sqlUpdateRelatorio = `
                     UPDATE RELATORIO 
-                    SET HORAS_TOTAIS = ?,
+                    SET 
+                        HORAS_TOTAIS = ?,
                         HORAS_SEMANAIS = ?,
-                        CLASSIFICACAO = ?
+                        CLASSIFICACAO_TOTAL = ?,  // Coluna adicional para classificação de horas totais
+                        CLASSIFICACAO_SEMANAL = ?  // Coluna adicional para classificação de horas semanais
                     WHERE ID_ALUNO = ?`;
 
-                conexao.query(sqlUpdateRelatorio, [tempoTotal, tempoSemanal, classificacao, matricula], function(erro) {
+                conexao.query(sqlUpdateRelatorio, [tempoTotal, tempoSemanal, classificacaoTotal, classificacaoSemanal, matricula], function(erro) {
                     if (erro) {
                         console.error('Erro ao atualizar relatório:', erro);
                         return res.status(500).json({ mensagem: 'Erro ao atualizar relatório' });
@@ -285,28 +293,6 @@ app.post('/registrosaida', function (req, res) {
                 });
             });
         });
-    });
-});
-
-
-app.get('/gerenciamento', function (req, res) {
-    //SQL 
-    let sql = 'SELECT * FROM ALUNOS';
-
-    conexao.query(sql, function (erro, retorno) {
-        res.render('gerente', { alunos: retorno });
-    });
-});
-
-
-app.get('/users', function (req, res) {
-    let querySelect = 'SELECT NOME FROM ALUNOS';
-
-    conexao.query(querySelect, function (erro, retorno) {
-        if (erro) throw erro;
-
-        // Envia os dados no formato JSON
-        res.json(retorno);
     });
 });
 
@@ -361,7 +347,88 @@ app.post('/relatorioAluno', async function (req, res) {
     }
 });
 
+app.get('/gerenciamento', function (req, res) {
+    res.render('gerente');
+});
 
+app.get('/gerenciamentosemanal', function (req, res) {
+    // Consulta SQL combinada (LEFT JOIN para incluir todos os alunos, mesmo sem relatório)
+    let sql = `
+        SELECT 
+            ALUNOS.MATRICULA, 
+            ALUNOS.NOME, 
+            RELATORIO.HORAS_SEMANAIS, 
+            RELATORIO.CLASSIFICACAO_SEMANAL
+        FROM 
+            ALUNOS
+        LEFT JOIN 
+            RELATORIO
+        ON 
+            ALUNOS.MATRICULA = RELATORIO.ID_ALUNO
+    `;
+
+    // Executa a consulta
+    conexao.query(sql, function(erro, resultados) {
+        if (erro) {
+            console.error('Erro ao executar consulta:', erro);
+            return res.status(500).send('Erro no servidor');
+        }
+
+        // Verifica se há resultados
+        if (resultados.length === 0) {
+            return res.send('Nenhum dado encontrado.');
+        }
+
+        // Renderiza o template com os dados combinados
+        res.render('gerentesemanal', { alunos: resultados });
+    });
+});
+
+
+app.get('/gerenciamentototal', function (req, res) {
+    // Consulta SQL combinada (LEFT JOIN para incluir todos os alunos, mesmo sem relatório)
+    let sql = `
+        SELECT 
+            ALUNOS.MATRICULA, 
+            ALUNOS.NOME, 
+            RELATORIO.HORAS_TOTAIS, 
+            RELATORIO.CLASSIFICACAO_TOTAL
+        FROM 
+            ALUNOS
+        LEFT JOIN 
+            RELATORIO
+        ON 
+            ALUNOS.MATRICULA = RELATORIO.ID_ALUNO
+    `;
+
+    // Executa a consulta
+    conexao.query(sql, function(erro, resultados) {
+        if (erro) {
+            console.error('Erro ao executar consulta:', erro);
+            return res.status(500).send('Erro no servidor');
+        }
+
+        // Verifica se há resultados
+        if (resultados.length === 0) {
+            return res.send('Nenhum dado encontrado.');
+        }
+
+        // Renderiza o template com os dados combinados
+        res.render('gerentetotal', { alunos: resultados });
+    });
+});
+
+
+app.get('/users', function (req, res) {
+    let querySelect = 'SELECT NOME FROM ALUNOS';
+
+    conexao.query(querySelect, function (erro, retorno) {
+        if (erro) throw erro;
+
+        // Envia os dados no formato JSON
+        res.json(retorno);
+    });
+});
 
 
 // Criando servidor
