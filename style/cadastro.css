@@ -4,121 +4,79 @@
 /* Estiliza o corpo da página */
 body {
     font-family: "Chakra Petch", sans-serif; /* Define a fonte padrão */
-    background-color: #404040; /* Cor de fundo da página */
+    background-color: #363636; /* Cor de fundo da página */
     display: flex; /* Usa Flexbox para layout */
     flex-direction: column; /* Alinha os itens na vertical */
     align-items: center; /* Centraliza os itens horizontalmente */
-    justify-content: center; /* Centraliza os itens verticalmente */
-    height: 100vh; /* Preenche a altura total da viewport */
-    margin: 0; /* Remove margens */
-    padding: 0; /* Remove espaçamentos */
-    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
+    justify-content: flex-start; /* Alinha os itens no topo */
+    min-height: 100vh; /* Preenche a altura total da viewport */
+    margin: 0; /* Remove a margem padrão do body */
 }
 
-@keyframes backgroundTransition {
-    0% { background-color: #696969; }
-    50% { background-color: #404040; }
-    100% { background-color: #696969; }
-}
-
-h1{
+/* Estiliza o título h1 */
+h1 {
     border: none; /* Remove qualquer borda ao redor do elemento h1 */
     background: #FA5A50; /* Define a cor de fundo como vermelho alaranjado */
-    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior, sem espaçamento nas laterais */
-    width: 20em; /* Define a largura do h1 como (relativo ao tamanho da fonte) */
+    padding: 10px 0; /* Adiciona 10px de espaçamento interno no topo e na parte inferior */
+    width: 20em; /* Define a largura do h1 como relativa ao tamanho da fonte */
     text-align: center; /* Centraliza o texto dentro do h1 */
-    transform: translateY(-200%); /* Move o h1 sua altura para cima */
-    margin-right:auto; /*para deixar no meio*/
-    margin-left: auto;
+    margin: 20px auto; /* Centraliza horizontalmente e adiciona espaçamento no topo */
 }
 
+/* Centraliza e ajusta a imagem */
 img {
-    width: 200px; /* ajuste o valor para o tamanho desejado */
-    height: auto; /* mantém a proporção */
+    display: block;  /* Define o elemento como um bloco */
+    margin: 0 auto 20px;  /* Centraliza horizontalmente e adiciona espaçamento abaixo */
+    max-width: 200px;  /* Define a largura máxima */
+    height: auto;  /* Mantém a proporção da imagem */
 }
 
-form{
-    background: #363636; /* Define a cor de fundo do formulário como cinza escuro */
-}
-
-div{
-    background: #363636; /* Cor de fundo dos itens */
-    margin-bottom: 5rem; /* Espaçamento abaixo dos itens */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    padding: 100px; /* Espaçamento interno de 100px em todas as direções */
-    display: flex; /* Usa Flexbox para o container */
-    flex-direction: column; /* Alinha os itens na vertical */
-    align-items: center; /* Centraliza os itens horizontalmente */
-    justify-content: center; /* Centraliza os itens verticalmente */
+/* Estiliza o formulário */
+form {
+    background: #363636; /* Cor de fundo do formulário */
+    padding: 20px; /* Adiciona espaçamento interno */
     border-radius: 8px; /* Borda arredondada */
-    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
 }
 
-section button {
-    padding: 0.8rem 1.2rem; /* Espaçamento interno do botão */
-    border: none; /* Remove a borda padrão */
-    border-radius: 1.5rem; /* Borda arredondada */
-    background-color: #FA5A50; /* Cor de fundo do botão */
-    color: #F5F7F8; /* Cor do texto do botão */
-    font-size: 1rem; /* Tamanho da fonte */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    padding-left: 8em; /* Adiciona 8em de espaço interno à esquerda do elemento */
-    padding-right: 8em; /* Adiciona 8em de espaço interno à direita do elemento */
-    transform: translateX(39em); /* Move o elemento 13em para a direita */
+/* Estiliza os grupos de formulário */
+.form-group {
+    display: flex; /* Exibe os elementos em linha */
+    flex-direction: column; /* Alinha os elementos verticalmente */
+    align-items: flex-start; /* Alinha os labels à esquerda */
+    margin-bottom: 1.5rem; /* Espaçamento entre os campos */
 }
 
-/* Estiliza os inputs dentro das seções */
-section input {
-    background-color: #696969;
-    border: none; /* Remove a borda padrão */
-    padding: 0.8rem 2.3rem; /* Espaçamento interno */
-    margin-bottom: 1rem; /* Espaçamento abaixo dos inputs */
+label {
+    padding: 0.5rem; /* Espaçamento interno */
+    background: #D3D3D3; /* Cor de fundo dos labels */
+    border-radius: 5px; /* Borda arredondada */
+    margin-bottom: 0.5rem; /* Espaçamento abaixo do label */
+    text-align: left; /* Alinha o texto à esquerda */
+    width: 97%; /* Ocupa 100% da largura */
+}
+
+input {
+    background-color: #696969; /* Cor de fundo do input */
+    border: none; /* Remove a borda */
+    padding: 0.8rem; /* Espaçamento interno */
     color: #FFFFFF; /* Cor do texto */
     font-size: 1rem; /* Tamanho da fonte */
-    box-sizing: border-box; /* Inclui padding e border na largura total */
-    margin-left: 15px; /* Cria um espaço de 15px à esquerda do elemento */ 
+    width: 100%; /* Ocupa toda a largura disponível */
+    max-width: 500px; /* Limita a largura máxima */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    border-radius: 5px; /* Borda arredondada */
 }
 
-label{
-    padding: 0.8rem 2.3rem; /* Espaçamento interno */
-    background: #D3D3D3; /* Cor de fundo cinza claro */
-    border: none; /* Remove a borda */
-    display: inline; /* para deixar o input na mesma linha */
-}
-
-.cpf{
-    padding: 0.8rem 2.6rem; /* Espaçamento interno */
-    background: #D3D3D3; /* Cor de fundo cinza claro */
-    border: none; /* Remove a borda */
-    display: inline; /* para deixar o input na mesma linha */
-}
-
-
-.lado{
-    display: inline; /* Exibe o elemento na mesma linha que outros elementos */
-    margin-left: 150px; /* Espaço de 150px à esquerda do elemento */
-}
-
-.selecionar{
-    background: none; /* Remove o fundo */
-    color: #DDDDDD; /* Cor do texto cinza claro */
-}
-
-/* Estilizando os inputs do tipo radio */
-input[type="radio"] {
-    margin-right: -30px; /* Move o elemento 30px para a esquerda em relação ao seu contêiner */
-    cursor: pointer; /* Mostra um cursor de "mão" ao passar por cima */
-}
-
-/* Estilizando o label para o input radio */
-input[type="radio"] + label {
-    margin-left: 5px; /* Espaçamento entre o rádio e o texto */
-}
-
-img {
-    display: block;  /* Define o elemento como um bloco, ocupando toda a largura disponível */
-    margin: 0 auto;  /* Centraliza o elemento horizontalmente */
-    transform: translateY(-40%);  /* Move o elemento 40% para cima em relação à sua posição original no eixo vertical (Y) */
-    max-width: 100%;  /* Faz a imagem não ultrapassar a largura da div */
-    height: auto;  /* Mantém a proporção da imagem */
+/* Centraliza e estiliza o botão */
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    background-color: #FA5A50;
+    color: #F5F7F8;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 1rem;
 }
