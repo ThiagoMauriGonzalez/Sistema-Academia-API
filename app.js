@@ -115,7 +115,7 @@ app.post('/registroentrada', function (req, res) {
     let matricula = req.body.matricula;
     // Ajustando o horário para o fuso horário local (UTC-3)
     let horaEntrada = new Date();
-    horaEntrada.setHours(horaEntrada.getHours() -3);
+    // horaEntrada.setHours(horaEntrada.getHours() -3); // Removido para evitar a adição de 3 horas
     horaEntrada = horaEntrada.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
@@ -195,7 +195,7 @@ app.post('/registrosaida', function (req, res) {
     let horaSaida = new Date();
     horaSaida.setSeconds(horaSaida.getSeconds()); // Corrigido para registrar os segundos
     horaSaida.setMinutes(horaSaida.getMinutes());
-    horaSaida.setHours(horaSaida.getHours());
+    horaSaida.setHours(horaSaida.getHours()); // Removido a subtração de 3 horas
     horaSaida = horaSaida.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
@@ -230,17 +230,10 @@ app.post('/registrosaida', function (req, res) {
             let sqlTempoTotal = `
                 SELECT 
                     SEC_TO_TIME(SUM(
-                        CASE 
-                            WHEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO)) < 3600
-                            THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
-                            ELSE TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
-                        END
+                        TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
                     )) as tempo_total,
                     SEC_TO_TIME(SUM(
                         CASE 
-                            WHEN HORARIO_INICIO >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND
-                                 TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO)) < 3600
-                            THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
                             WHEN HORARIO_INICIO >= DATE_SUB(NOW(), INTERVAL 7 DAY)
                             THEN TIME_TO_SEC(TIMEDIFF(HORARIO_SAIDA, HORARIO_INICIO))
                             ELSE 0
