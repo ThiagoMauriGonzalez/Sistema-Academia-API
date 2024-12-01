@@ -110,7 +110,7 @@ app.get('/catraca', function (req, res) {
     res.render('catraca');
 });
 
-//ENTRADA da catraca    
+ //ENTRADA da catraca    
 app.post('/registroentrada', function (req, res) {
     let matricula = req.body.matricula;
     // Ajustando o horário para o fuso horário local (UTC-3)
