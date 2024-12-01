@@ -378,7 +378,7 @@ app.get('/gerenciamentosemanal', function (req, res) {
         CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(R.HORAS_SEMANAIS, ':', -2), ':', 1) AS UNSIGNED) DESC; -- Ordena os minutos
 
     `;
-
+    
     // Executa a consulta
     conexao.query(sql, function(erro, resultados) {
         if (erro) {
