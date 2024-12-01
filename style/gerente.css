@@ -11,6 +11,13 @@ body {
     justify-content: flex-start; /* Alinha os itens no topo da tela */
     min-height: 100vh; /* Garante que o body ocupe 100% da altura da tela */
     margin: 0; /* Remove a margem padrão do body */
+    animation: backgroundTransition 10s infinite; /* Animação de transição de cor de fundo */
+}
+
+@keyframes backgroundTransition {
+    0% { background-color: #696969; }
+    50% { background-color: #404040; }
+    100% { background-color: #696969; }
 }
 
 h1 {
@@ -33,6 +40,7 @@ h1 {
     margin: 0 auto; /* Centraliza horizontalmente */
     height: 100%; /* Garante que a altura do contêiner ocupe a altura restante da tela */
     margin: 2rem 0;
+    border-radius: 8px; /* Borda arredondada */
 }
 
 /* Estilo do título principal */
