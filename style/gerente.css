@@ -13,6 +13,10 @@ body {
     margin: 0; /* Remove a margem padrão do body */
 }
 
+h1 {
+    border-radius: 8px; /* Borda arredondada */
+}
+
 /* Estilo do container que envolve o conteúdo */
 .backgroundCinza {
     background: #363636; /* Cor de fundo dos itens */

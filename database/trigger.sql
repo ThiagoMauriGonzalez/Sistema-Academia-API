@@ -27,24 +27,24 @@ BEGIN
 
     -- Classificação de horas totais
     IF TIME_TO_SEC(tempo_total) <= 18000 THEN
-        SET classificacao_total = 'Iniciante';
+        SET classificacao_total = 'Iniciante';  -- Até 5 horas (18000 segundos)
     ELSEIF TIME_TO_SEC(tempo_total) > 18000 AND TIME_TO_SEC(tempo_total) <= 36000 THEN
-        SET classificacao_total = 'Intermediário';
+        SET classificacao_total = 'Intermediário';  -- 5 a 10 horas (18000-36000 segundos)
     ELSEIF TIME_TO_SEC(tempo_total) > 36000 AND TIME_TO_SEC(tempo_total) <= 72000 THEN
-        SET classificacao_total = 'Avançado';
+        SET classificacao_total = 'Avançado';  -- 10 a 20 horas (36000-72000 segundos)
     ELSE
-        SET classificacao_total = 'Extremamente Avançado';
+        SET classificacao_total = 'Extremamente Avançado';  -- Mais de 20 horas
     END IF;
 
     -- Classificação de horas semanais
     IF TIME_TO_SEC(tempo_semanal) <= 18000 THEN
-        SET classificacao_semanal = 'Iniciante';
+        SET classificacao_semanal = 'Iniciante';  -- Até 5 horas (18000 segundos)
     ELSEIF TIME_TO_SEC(tempo_semanal) > 18000 AND TIME_TO_SEC(tempo_semanal) <= 36000 THEN
-        SET classificacao_semanal = 'Intermediário';
+        SET classificacao_semanal = 'Intermediário';  -- 5 a 10 horas (18000-36000 segundos)
     ELSEIF TIME_TO_SEC(tempo_semanal) > 36000 AND TIME_TO_SEC(tempo_semanal) <= 72000 THEN
-        SET classificacao_semanal = 'Avançado';
+        SET classificacao_semanal = 'Avançado';  -- 10 a 20 horas (36000-72000 segundos)
     ELSE
-        SET classificacao_semanal = 'Extremamente Avançado';
+        SET classificacao_semanal = 'Extremamente Avançado';  -- Mais de 20 horas
     END IF;
 
     -- Atualizando a tabela RELATORIO
@@ -59,3 +59,4 @@ BEGIN
 END $$
 
 DELIMITER ;
+
