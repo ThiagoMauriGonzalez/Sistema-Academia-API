@@ -115,7 +115,7 @@ app.post('/registroentrada', function (req, res) {
     let matricula = req.body.matricula;
     // Ajustando o horário para o fuso horário local (UTC-3)
     let horaEntrada = new Date();
-    horaEntrada.setHours(horaEntrada.getHours() - 3);
+    horaEntrada.setHours(horaEntrada.getHours() -3);
     horaEntrada = horaEntrada.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
@@ -193,7 +193,7 @@ app.post('/registroentrada', function (req, res) {
 app.post('/registrosaida', function (req, res) {
     let matricula = req.body.matricula;
     let horaSaida = new Date();
-    horaSaida.setHours(horaSaida.getHours() - 3);
+    horaSaida.setHours(horaSaida.getHours() -3);
     horaSaida = horaSaida.toISOString().slice(0, 19).replace('T', ' ');
 
     // Primeiro verifica se o aluno existe
@@ -276,8 +276,8 @@ app.post('/registrosaida', function (req, res) {
                     SET 
                         HORAS_TOTAIS = ?,
                         HORAS_SEMANAIS = ?,
-                        CLASSIFICACAO_TOTAL = ?,  // Coluna adicional para classificação de horas totais
-                        CLASSIFICACAO_SEMANAL = ?  // Coluna adicional para classificação de horas semanais
+                        CLASSIFICACAO_TOTAL = ?,  -- Coluna adicional para classificação de horas totais
+                        CLASSIFICACAO_SEMANAL = ?  -- Coluna adicional para classificação de horas semanais
                     WHERE ID_ALUNO = ?`;
 
                 conexao.query(sqlUpdateRelatorio, [tempoTotal, tempoSemanal, classificacaoTotal, classificacaoSemanal, matricula], function(erro) {
@@ -316,7 +316,7 @@ app.post('/relatorioAluno', async function (req, res) {
 
         // Promessa para a segunda query
         const relatorioQuery = new Promise((resolve, reject) => {
-            let sqlhoras = 'SELECT HORAS_SEMANAIS, CLASSIFICACAO FROM RELATORIO WHERE ID_ALUNO = ?';
+            let sqlhoras = 'SELECT HORAS_SEMANAIS, CLASSIFICACAO_SEMANAL FROM RELATORIO WHERE ID_ALUNO = ?';
             conexao.query(sqlhoras, [matricula], (erro, resultado) => {
                 if (erro) return reject(erro);
                 resolve(resultado);
@@ -336,7 +336,7 @@ app.post('/relatorioAluno', async function (req, res) {
                 ALTURA: dadosAluno[0].ALTURA,
                 PESO: dadosAluno[0].PESO,
                 HORAS_SEMANAIS: dadosRelatorio[0].HORAS_SEMANAIS,
-                CLASSIFICACAO: dadosRelatorio[0].CLASSIFICACAO
+                CLASSIFICACAO_SEMANAL: dadosRelatorio[0].CLASSIFICACAO_SEMANAL
             });
         } else {
             res.send('Aluno ou relatório não encontrado');
@@ -354,17 +354,34 @@ app.get('/gerenciamento', function (req, res) {
 app.get('/gerenciamentosemanal', function (req, res) {
     // Consulta SQL combinada (LEFT JOIN para incluir todos os alunos, mesmo sem relatório)
     let sql = `
-        SELECT 
-            ALUNOS.MATRICULA, 
-            ALUNOS.NOME, 
-            RELATORIO.HORAS_SEMANAIS, 
-            RELATORIO.CLASSIFICACAO_SEMANAL
-        FROM 
-            ALUNOS
-        LEFT JOIN 
-            RELATORIO
-        ON 
-            ALUNOS.MATRICULA = RELATORIO.ID_ALUNO
+        WITH UltimosRegistros AS (
+    SELECT 
+        ID_ALUNO,
+        HORAS_TOTAIS,
+        HORAS_SEMANAIS,
+        CLASSIFICACAO_TOTAL,
+        CLASSIFICACAO_SEMANAL,
+        ROW_NUMBER() OVER (PARTITION BY ID_ALUNO ORDER BY ID_RELATORIO DESC) AS rn
+    FROM 
+    RELATORIO
+    )
+    SELECT 
+        A.MATRICULA,
+        A.NOME,
+        R.HORAS_TOTAIS,
+        R.HORAS_SEMANAIS,
+        R.CLASSIFICACAO_TOTAL,
+        R.CLASSIFICACAO_SEMANAL
+    FROM 
+        UltimosRegistros R
+    INNER JOIN 
+        ALUNOS A ON R.ID_ALUNO = A.MATRICULA
+    WHERE 
+        R.rn = 1
+    ORDER BY 
+        CAST(SUBSTRING_INDEX(R.HORAS_SEMANAIS, ':', 1) AS UNSIGNED) DESC,  -- Ordena pelas horas semanais (parte das horas)
+        CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(R.HORAS_SEMANAIS, ':', -2), ':', 1) AS UNSIGNED) DESC; -- Ordena os minutos
+
     `;
 
     // Executa a consulta
@@ -388,17 +405,34 @@ app.get('/gerenciamentosemanal', function (req, res) {
 app.get('/gerenciamentototal', function (req, res) {
     // Consulta SQL combinada (LEFT JOIN para incluir todos os alunos, mesmo sem relatório)
     let sql = `
-        SELECT 
-            ALUNOS.MATRICULA, 
-            ALUNOS.NOME, 
-            RELATORIO.HORAS_TOTAIS, 
-            RELATORIO.CLASSIFICACAO_TOTAL
-        FROM 
-            ALUNOS
-        LEFT JOIN 
-            RELATORIO
-        ON 
-            ALUNOS.MATRICULA = RELATORIO.ID_ALUNO
+        WITH UltimosRegistros AS (
+    SELECT 
+        ID_ALUNO,
+        HORAS_TOTAIS,
+        HORAS_SEMANAIS,
+        CLASSIFICACAO_TOTAL,
+        CLASSIFICACAO_SEMANAL,
+        ROW_NUMBER() OVER (PARTITION BY ID_ALUNO ORDER BY ID_RELATORIO DESC) AS rn
+    FROM 
+        RELATORIO
+    )
+    SELECT 
+        A.MATRICULA,
+        A.NOME,
+        R.HORAS_TOTAIS,
+        R.HORAS_SEMANAIS,
+        R.CLASSIFICACAO_TOTAL,
+        R.CLASSIFICACAO_SEMANAL
+    FROM 
+        UltimosRegistros R
+    INNER JOIN 
+        ALUNOS A ON R.ID_ALUNO = A.MATRICULA
+    WHERE 
+        R.rn = 1
+    ORDER BY 
+        CAST(SUBSTRING_INDEX(R.HORAS_TOTAIS, ':', 1) AS UNSIGNED) DESC,  -- Ordena pelas horas totais (parte das horas)
+        CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(R.HORAS_TOTAIS, ':', -2), ':', 1) AS UNSIGNED) DESC; -- Ordena os minutos
+
     `;
 
     // Executa a consulta
