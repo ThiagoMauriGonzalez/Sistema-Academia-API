@@ -46,10 +46,10 @@ CREATE TABLE RELATORIO (
         REFERENCES ALUNOS (MATRICULA)
 );
 
--- Inserção de registro para o aluno 1 no dia 24/11/2024 (3 horas)
+-- Inserção de registro para o aluno 1 no dia 26/11/2024 (3 horas)
 INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO, HORARIO_SAIDA) 
 VALUES 
-(1, '2024-11-24 09:00:00', '2024-11-24 12:00:00');
+(1, '2024-11-26 09:00:00', '2024-11-26 12:00:00');
 -- Inserção de registro para o aluno 1 no dia 26/11/2024 (3,5 horas)
 INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO, HORARIO_SAIDA) 
 VALUES 
@@ -72,7 +72,7 @@ VALUES
 -- Inserção de registros para o aluno 2 para classificação semanal (últimos 7 dias)
 INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO, HORARIO_SAIDA) 
 VALUES 
-(2, '2024-11-24 08:00:00', '2024-11-24 11:00:00'), -- 3 horas no dia 24/11/2024
+(2, '2024-11-26 08:00:00', '2024-11-26 11:00:00'), -- 3 horas no dia 26/11/2024
 (2, '2024-11-27 09:30:00', '2024-11-27 12:00:00'), -- 2,5 horas no dia 27/11/2024
 (2, '2024-11-29 14:00:00', '2024-11-29 17:30:00'); -- 3,5 horas no dia 29/11/2024
 
