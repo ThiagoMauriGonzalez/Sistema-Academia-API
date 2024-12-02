@@ -333,11 +333,11 @@ app.post('/relatorioAluno', async function (req, res) {
 
         // Verifica se há resultados
         if (resultados.length === 0) {
-            return res.send('Nenhum dado encontrado.');
+            return res.send('Aluno ou relatório não encontrado.');
         }
 
         // Renderiza o template com os dados combinados
-        res.render('relatorioAluno', {resultados });
+        res.render('relatorioAluno', { resultados });
     });
 });
 
