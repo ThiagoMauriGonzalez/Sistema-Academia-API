@@ -299,47 +299,46 @@ app.get('/loginRelatorio', function (req, res) {
 app.post('/relatorioAluno', async function (req, res) {
     let matricula = req.body.matricula;
 
-    try {
-        // Promessa para a primeira query
-        const alunoQuery = new Promise((resolve, reject) => {
-            let sql = 'SELECT * FROM ALUNOS WHERE MATRICULA = ?';
-            conexao.query(sql, [matricula], (erro, resultado) => {
-                if (erro) return reject(erro);
-                resolve(resultado);
-            });
-        });
+    let sql = `
+        WITH UltimoRelatorio AS (
+            SELECT 
+                ID_ALUNO,
+                HORAS_SEMANAIS,
+                CLASSIFICACAO_SEMANAL,
+                ROW_NUMBER() OVER (PARTITION BY ID_ALUNO ORDER BY ID_RELATORIO DESC) AS rn
+            FROM 
+                RELATORIO
+        )
+        SELECT 
+            A.MATRICULA,
+            A.NOME,
+            R.HORAS_SEMANAIS,
+            R.CLASSIFICACAO_SEMANAL
+        FROM 
+            UltimoRelatorio R
+        INNER JOIN 
+            ALUNOS A ON R.ID_ALUNO = A.MATRICULA
+        WHERE 
+            R.rn = 1
+            AND A.MATRICULA = ?;
 
-        // Promessa para a segunda query
-        const relatorioQuery = new Promise((resolve, reject) => {
-            let sqlhoras = 'SELECT HORAS_SEMANAIS, CLASSIFICACAO_SEMANAL FROM RELATORIO WHERE ID_ALUNO = ?';
-            conexao.query(sqlhoras, [matricula], (erro, resultado) => {
-                if (erro) return reject(erro);
-                resolve(resultado);
-            });
-        });
+                                `;
 
-        // Executa as duas queries
-        const [dadosAluno, dadosRelatorio] = await Promise.all([alunoQuery, relatorioQuery]);
-
-        // Verifica os resultados e renderiza o template
-        if (dadosAluno.length > 0 && dadosRelatorio.length > 0) {
-            res.render('relatorioAluno', {
-                MATRICULA: dadosAluno[0].MATRICULA,
-                NOME: dadosAluno[0].NOME,
-                CPF: dadosAluno[0].CPF,
-                EMAIL: dadosAluno[0].EMAIL,
-                ALTURA: dadosAluno[0].ALTURA,
-                PESO: dadosAluno[0].PESO,
-                HORAS_SEMANAIS: dadosRelatorio[0].HORAS_SEMANAIS,
-                CLASSIFICACAO_SEMANAL: dadosRelatorio[0].CLASSIFICACAO_SEMANAL
-            });
-        } else {
-            res.send('Aluno ou relatório não encontrado');
+    // Executa a consulta
+    conexao.query(sql, [matricula], function(erro, resultados) {
+        if (erro) {
+            console.error('Erro ao executar consulta:', erro);
+            return res.status(500).send('Erro no servidor');
         }
-    } catch (erro) {
-        console.error('Erro ao buscar dados:', erro);
-        res.status(500).send('Erro interno do servidor');
-    }
+
+        // Verifica se há resultados
+        if (resultados.length === 0) {
+            return res.send('Nenhum dado encontrado.');
+        }
+
+        // Renderiza o template com os dados combinados
+        res.render('relatorioAluno', {resultados });
+    });
 });
 
 app.get('/gerenciamento', function (req, res) {
