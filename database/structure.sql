@@ -78,3 +78,16 @@ VALUES
 (2, '2024-08-20 08:00:00', '2024-08-20 12:00:00'), -- 4 horas no dia 20/08/2024
 (2, '2024-06-10 07:00:00', '2024-06-10 10:00:00'); -- 3 horas no dia 10/06/2024
 
+
+-- Inserção de registros para o aluno 3 para classificação semanal (últimos 7 dias)
+INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO, HORARIO_SAIDA) 
+VALUES 
+(3, '2024-11-26 08:30:00', '2024-11-26 12:00:00'), -- 3,5 horas no dia 26/11/2024
+(3, '2024-11-27 14:00:00', '2024-11-27 16:30:00'), -- 2,5 horas no dia 27/11/2024
+(3, '2024-11-29 09:00:00', '2024-11-29 12:30:00'); -- 3,5 horas no dia 29/11/2024
+
+-- Inserção de registros para o aluno 2 para classificação total (qualquer data)
+INSERT INTO CATRACA (ID_ALUNO, HORARIO_INICIO, HORARIO_SAIDA) 
+VALUES 
+(3, '2024-09-25 10:00:00', '2024-09-25 14:30:00'), -- 3,5 horas no dia 25/09/2024
+(3, '2024-07-15 08:00:00', '2024-07-15 12:00:00'); -- 4 horas no dia 15/07/2024
